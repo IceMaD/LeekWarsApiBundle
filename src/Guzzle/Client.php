@@ -29,6 +29,9 @@ class Client extends \GuzzleHttp\Client
         $this->serializer = $serializer;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function requestAsync($method, $uri = '', array $options = [])
     {
         if (!isset($options['class'])) {

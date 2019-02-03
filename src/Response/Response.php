@@ -1,6 +1,6 @@
 <?php
 
-namespace IceMaD\Bundle\LeekWarsApiBundle\Response;
+namespace IceMaD\LeekWarsApiBundle\Response;
 
 abstract class Response
 {

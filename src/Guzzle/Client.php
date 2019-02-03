@@ -1,10 +1,10 @@
 <?php
 
-namespace IceMaD\Bundle\LeekWarsApiBundle\Guzzle;
+namespace IceMaD\LeekWarsApiBundle\Guzzle;
 
-use IceMaD\Bundle\LeekWarsApiBundle\Exception\InvalidTokenException;
-use IceMaD\Bundle\LeekWarsApiBundle\Exception\RequestFailedException;
-use IceMaD\Bundle\LeekWarsApiBundle\Response\Response;
+use IceMaD\LeekWarsApiBundle\Exception\InvalidTokenException;
+use IceMaD\LeekWarsApiBundle\Exception\RequestFailedException;
+use IceMaD\LeekWarsApiBundle\Response\Response;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 

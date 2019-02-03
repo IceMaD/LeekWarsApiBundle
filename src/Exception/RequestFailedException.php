@@ -1,8 +1,8 @@
 <?php
 
-namespace IceMaD\Bundle\LeekWarsApiBundle\Exception;
+namespace IceMaD\LeekWarsApiBundle\Exception;
 
-use IceMaD\Bundle\LeekWarsApiBundle\Response\Response;
+use IceMaD\LeekWarsApiBundle\Response\Response;
 
 class RequestFailedException extends \Exception
 {

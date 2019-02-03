@@ -1,6 +1,6 @@
 <?php
 
-namespace IceMaD\Bundle\LeekWarsApiBundle\Entity;
+namespace IceMaD\LeekWarsApiBundle\Entity;
 
 class InvalidScriptError
 {

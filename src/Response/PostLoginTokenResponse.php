@@ -1,8 +1,8 @@
 <?php
 
-namespace IceMaD\Bundle\LeekWarsApiBundle\Response;
+namespace IceMaD\LeekWarsApiBundle\Response;
 
-use IceMaD\Bundle\LeekWarsApiBundle\Entity\Farmer;
+use IceMaD\LeekWarsApiBundle\Entity\Farmer;
 
 class PostLoginTokenResponse extends Response
 {

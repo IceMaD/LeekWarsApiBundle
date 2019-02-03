@@ -1,6 +1,6 @@
 <?php
 
-namespace IceMaD\Bundle\LeekWarsApiBundle;
+namespace IceMaD\LeekWarsApiBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

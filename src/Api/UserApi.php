@@ -1,10 +1,10 @@
 <?php
 
-namespace IceMaD\Bundle\LeekWarsApiBundle\Api;
+namespace IceMaD\LeekWarsApiBundle\Api;
 
 use GuzzleHttp\Promise\PromiseInterface;
-use IceMaD\Bundle\LeekWarsApiBundle\Guzzle\Client;
-use IceMaD\Bundle\LeekWarsApiBundle\Response\PostLoginTokenResponse;
+use IceMaD\LeekWarsApiBundle\Guzzle\Client;
+use IceMaD\LeekWarsApiBundle\Response\PostLoginTokenResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class UserApi

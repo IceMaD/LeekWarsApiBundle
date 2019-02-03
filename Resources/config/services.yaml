@@ -2,8 +2,3 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
-
-    IceMaD\Bundle\LeekWarsApiBundle\:
-        resource: '../src/*'
-
-    IceMaD\Bundle\LeekWarsApiBundle\Guzzle\Client: ~

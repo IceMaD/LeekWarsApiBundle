@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Api;
+namespace IceMaD\LeekWarsApiBundle\Api;
 
 use GuzzleHttp\Promise\PromiseInterface;
 use IceMaD\LeekWarsApiBundle\Entity\Folder;

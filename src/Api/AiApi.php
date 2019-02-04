@@ -3,9 +3,7 @@
 namespace IceMaD\LeekWarsApiBundle\Api;
 
 use GuzzleHttp\Promise\PromiseInterface;
-use IceMaD\LeekWarsApiBundle\Entity\Ai;
-use IceMaD\LeekWarsApiBundle\Entity\Folder;
-use IceMaD\LeekWarsApiBundle\Guzzle\Client;
+use IceMaD\LeekWarsApiBundle\Exception\NotImplementedException;
 use IceMaD\LeekWarsApiBundle\Response\GetAiResponse;
 use IceMaD\LeekWarsApiBundle\Response\GetFarmerAisResponse;
 use IceMaD\LeekWarsApiBundle\Response\PostAiChangeFolderResponse;
@@ -13,157 +11,105 @@ use IceMaD\LeekWarsApiBundle\Response\PostAiDeleteResponse;
 use IceMaD\LeekWarsApiBundle\Response\PostAiNewResponse;
 use IceMaD\LeekWarsApiBundle\Response\PostAiRenameResponse;
 use IceMaD\LeekWarsApiBundle\Response\PostAiSaveResponse;
-use IceMaD\LeekWarsApiBundle\Storage\TokenStorage;
-use Symfony\Component\Serializer\SerializerInterface;
 
-class AiApi
+class AiApi extends AbstractApi
 {
-    /**
-     * @var Client
-     */
-    private $client;
+    const BASE_URL = '/api/ai';
 
-    /**
-     * @var TokenStorage
-     */
-    private $tokenStorage;
-
-    /**
-     * @var SerializerInterface
-     */
-    private $serializer;
-
-    public function __construct(Client $client, TokenStorage $tokenStorage, SerializerInterface $serializer)
+    public function changeFolder(int $aiId, int $folderId, string $token = null): PromiseInterface
     {
-        $this->client = $client;
-        $this->tokenStorage = $tokenStorage;
-        $this->serializer = $serializer;
+        return $this->client->postAsync(self::BASE_URL.'/change-folder/', [
+            'body' => http_build_query([
+                'ai_id' => $aiId,
+                'folder_id' => $folderId,
+                'token' => $token ?? $this->tokenStorage->getToken(),
+            ]),
+            'class' => PostAiChangeFolderResponse::class,
+        ]);
     }
 
-    public function getFarmerAIs(): PromiseInterface
+    public function delete(int $aiId, string $token = null): PromiseInterface
     {
-        $token = $this->tokenStorage->getToken();
-
-        return $this->client->getAsync("/api/ai/get-farmer-ais/$token", ['class' => GetFarmerAisResponse::class]);
+        return $this->client->postAsync(self::BASE_URL.'/delete/', [
+            'body' => http_build_query([
+                'ai_id' => $aiId,
+                'token' => $token ?? $this->tokenStorage->getToken(),
+            ]),
+            'class' => PostAiDeleteResponse::class,
+        ]);
     }
 
-    public function getAI(int $id): PromiseInterface
+    public function getAi(int $aiId, string $token = null): PromiseInterface
     {
-        $token = $this->tokenStorage->getToken();
+        $token = $token ?? $this->tokenStorage->getToken();
 
-        return $this->client->getAsync("/api/ai/get/$id/$token", ['class' => GetAiResponse::class])
+        return $this->client->getAsync(self::BASE_URL."/get/$aiId/$token", ['class' => GetAiResponse::class])
             ->then(function (GetAiResponse $response) {
                 return $response->getAi();
             });
     }
 
-    public function createAi(Ai $ai)
+    public function getFarmerAis(string $token = null): PromiseInterface
     {
-        $token = $this->tokenStorage->getToken();
+        $token = $token ?? $this->tokenStorage->getToken();
 
-        $data = [
-            'folder_id' => $ai->getFolder()->getId(),
-            'v2' => 'false',
-            'token' => $token,
-        ];
+        return $this->client->getAsync(self::BASE_URL."/get-farmer-ais/$token", ['class' => GetFarmerAisResponse::class]);
+    }
 
-        return $this->client->postAsync('/api/ai/new/', [
-            'body' => http_build_query($data),
+    public function new(int $folderId, bool $v2 = false, string $token = null): PromiseInterface
+    {
+        return $this->client->postAsync(self::BASE_URL.'/new/', [
+            'body' => http_build_query([
+                'folder_id' => $folderId,
+                'v2' => (string) $v2,
+                'token' => $token || $this->tokenStorage->getToken(),
+            ]),
             'class' => PostAiNewResponse::class,
-        ])
-            ->then(function (PostAiNewResponse $response) use ($ai) {
-                $ai->setId($response->getAi()->getId());
-
-                return $ai;
-            });
+        ]);
     }
 
-    public function updateAiCode(Ai $ai, string $code): PromiseInterface
+    public function rename(int $aiId, string $newName, string $token = null): PromiseInterface
     {
-        $token = $this->tokenStorage->getToken();
-
-        $data = [
-            'ai_id' => $ai->getId(),
-            'code' => $code,
-            'token' => $token,
-        ];
-
-        return $this->client->postAsync('/api/ai/save/', [
-            'body' => http_build_query($data),
-            'class' => PostAiSaveResponse::class,
-        ])
-            ->then(function (PostAiSaveResponse $response) use ($code, $ai) {
-                $ai->setCode($code);
-
-                if ($response->isAiValid()) {
-                    $ai->setValid(true);
-                } else {
-                    $ai->setValid(false);
-                    $ai->setError($response->getAiError());
-                }
-
-                return $ai;
-            });
-    }
-
-    public function renameAi(Ai $ai, string $name): PromiseInterface
-    {
-        $token = $this->tokenStorage->getToken();
-
-        $data = [
-            'ai_id' => $ai->getId(),
-            'new_name' => $name,
-            'token' => $token,
-        ];
-
-        return $this->client->postAsync('/api/ai/rename/', [
-            'body' => http_build_query($data),
+        return $this->client->postAsync(self::BASE_URL.'/rename/', [
+            'body' => http_build_query([
+                'ai_id' => $aiId,
+                'new_name' => $newName,
+                'token' => $token ?? $this->tokenStorage->getToken(),
+            ]),
             'class' => PostAiRenameResponse::class,
-        ])
-            ->then(function () use ($name, $ai) {
-                $ai->setName($name);
-
-                return $ai;
-            });
+        ]);
     }
 
-    public function deleteAi(Ai $ai): PromiseInterface
+    public function save(int $aiId, string $code, string $token = null): PromiseInterface
     {
-        $token = $this->tokenStorage->getToken();
-
-        $data = [
-            'ai_id' => $ai->getId(),
-            'token' => $token,
-        ];
-
-        return $this->client->postAsync('/api/ai/delete/', [
-            'body' => http_build_query($data),
-            'class' => PostAiDeleteResponse::class,
-        ])
-            ->then(function () use ($ai) {
-                $ai->getFolder()->removeAi($ai);
-            });
+        return $this->client->postAsync(self::BASE_URL.'/save/', [
+            'body' => http_build_query([
+                'ai_id' => $aiId,
+                'code' => $code,
+                'token' => $token ?? $this->tokenStorage->getToken(),
+            ]),
+            'class' => PostAiSaveResponse::class,
+        ]);
     }
 
-    public function changeFolder(Ai $ai, Folder $folder)
+    public function test(int $aiId, int $leekId, array $bots, string $type, string $token = null): PromiseInterface
     {
-        $token = $this->tokenStorage->getToken();
+        $url = self::BASE_URL.'/test/';
 
-        $data = [
-            'ai_id' => $ai->getId(),
-            'folder_id' => $folder->getId(),
-            'token' => $token,
-        ];
+        throw new NotImplementedException('test');
+    }
 
-        return $this->client->postAsync('/api/ai/change-folder/', [
-            'body' => http_build_query($data),
-            'class' => PostAiChangeFolderResponse::class,
-        ])
-            ->then(function () use ($ai, $folder) {
-                $ai->getFolder()->removeAi($ai);
-                $folder->addAi($ai);
+    public function testNew(string $data, string $token = null): PromiseInterface
+    {
+        $url = self::BASE_URL.'/test-new/';
 
-                return $ai;
-            });
+        throw new NotImplementedException('testNew');
+    }
+
+    public function testV2(string $data, string $token = null): PromiseInterface
+    {
+        $url = self::BASE_URL.'/test-v2/';
+
+        throw new NotImplementedException('testV2');
     }
 }

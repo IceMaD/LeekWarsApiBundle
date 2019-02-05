@@ -59,7 +59,7 @@ class AiApi extends AbstractApi
             'body' => http_build_query([
                 'folder_id' => $folderId,
                 'v2' => $v2 ? 'true' : 'false',
-                'token' => $token || $this->tokenStorage->getToken(),
+                'token' => $token ?? $this->tokenStorage->getToken(),
             ]),
             'class' => NewResponse::class,
         ]);

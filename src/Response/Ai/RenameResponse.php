@@ -1,10 +1,11 @@
 <?php
 
-namespace IceMaD\LeekWarsApiBundle\Response;
+namespace IceMaD\LeekWarsApiBundle\Response\Ai;
 
 use IceMaD\LeekWarsApiBundle\Entity\Ai;
+use IceMaD\LeekWarsApiBundle\Response\Response;
 
-class PostAiNewResponse extends Response
+class RenameResponse extends Response
 {
     /**
      * @var Ai
@@ -22,9 +23,9 @@ class PostAiNewResponse extends Response
     /**
      * @param Ai $ai
      *
-     * @return PostAiNewResponse
+     * @return RenameResponse
      */
-    public function setAi(Ai $ai)
+    public function setAi(Ai $ai): self
     {
         $this->ai = $ai;
 

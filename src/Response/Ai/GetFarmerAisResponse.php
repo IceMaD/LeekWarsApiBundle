@@ -1,9 +1,10 @@
 <?php
 
-namespace IceMaD\LeekWarsApiBundle\Response;
+namespace IceMaD\LeekWarsApiBundle\Response\Ai;
 
 use IceMaD\LeekWarsApiBundle\Entity\Ai;
 use IceMaD\LeekWarsApiBundle\Entity\Folder;
+use IceMaD\LeekWarsApiBundle\Response\Response;
 
 class GetFarmerAisResponse extends Response
 {

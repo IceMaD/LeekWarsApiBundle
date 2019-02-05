@@ -4,13 +4,13 @@ namespace IceMaD\LeekWarsApiBundle\Api;
 
 use GuzzleHttp\Promise\PromiseInterface;
 use IceMaD\LeekWarsApiBundle\Exception\NotImplementedException;
-use IceMaD\LeekWarsApiBundle\Response\GetAiResponse;
-use IceMaD\LeekWarsApiBundle\Response\GetFarmerAisResponse;
-use IceMaD\LeekWarsApiBundle\Response\PostAiChangeFolderResponse;
-use IceMaD\LeekWarsApiBundle\Response\PostAiDeleteResponse;
-use IceMaD\LeekWarsApiBundle\Response\PostAiNewResponse;
-use IceMaD\LeekWarsApiBundle\Response\PostAiRenameResponse;
-use IceMaD\LeekWarsApiBundle\Response\PostAiSaveResponse;
+use IceMaD\LeekWarsApiBundle\Response\Ai\GetAiResponse;
+use IceMaD\LeekWarsApiBundle\Response\Ai\GetFarmerAisResponse;
+use IceMaD\LeekWarsApiBundle\Response\Ai\ChangeFolderResponse;
+use IceMaD\LeekWarsApiBundle\Response\Ai\DeleteResponse;
+use IceMaD\LeekWarsApiBundle\Response\Ai\NewResponse;
+use IceMaD\LeekWarsApiBundle\Response\Ai\RenameResponse;
+use IceMaD\LeekWarsApiBundle\Response\Ai\SaveResponse;
 
 class AiApi extends AbstractApi
 {
@@ -24,7 +24,7 @@ class AiApi extends AbstractApi
                 'folder_id' => $folderId,
                 'token' => $token ?? $this->tokenStorage->getToken(),
             ]),
-            'class' => PostAiChangeFolderResponse::class,
+            'class' => ChangeFolderResponse::class,
         ]);
     }
 
@@ -35,7 +35,7 @@ class AiApi extends AbstractApi
                 'ai_id' => $aiId,
                 'token' => $token ?? $this->tokenStorage->getToken(),
             ]),
-            'class' => PostAiDeleteResponse::class,
+            'class' => DeleteResponse::class,
         ]);
     }
 
@@ -61,7 +61,7 @@ class AiApi extends AbstractApi
                 'v2' => (string) $v2,
                 'token' => $token || $this->tokenStorage->getToken(),
             ]),
-            'class' => PostAiNewResponse::class,
+            'class' => NewResponse::class,
         ]);
     }
 
@@ -73,7 +73,7 @@ class AiApi extends AbstractApi
                 'new_name' => $newName,
                 'token' => $token ?? $this->tokenStorage->getToken(),
             ]),
-            'class' => PostAiRenameResponse::class,
+            'class' => RenameResponse::class,
         ]);
     }
 
@@ -85,7 +85,7 @@ class AiApi extends AbstractApi
                 'code' => $code,
                 'token' => $token ?? $this->tokenStorage->getToken(),
             ]),
-            'class' => PostAiSaveResponse::class,
+            'class' => SaveResponse::class,
         ]);
     }
 

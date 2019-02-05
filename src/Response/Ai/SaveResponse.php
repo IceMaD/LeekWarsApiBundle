@@ -1,10 +1,11 @@
 <?php
 
-namespace IceMaD\LeekWarsApiBundle\Response;
+namespace IceMaD\LeekWarsApiBundle\Response\Ai;
 
 use IceMaD\LeekWarsApiBundle\Entity\InvalidScriptError;
+use IceMaD\LeekWarsApiBundle\Response\Response;
 
-class PostAiSaveResponse extends Response
+class SaveResponse extends Response
 {
     /**
      * @var array
@@ -22,7 +23,7 @@ class PostAiSaveResponse extends Response
     /**
      * @param array $result
      *
-     * @return PostAiSaveResponse
+     * @return SaveResponse
      */
     public function setResult(array $result)
     {

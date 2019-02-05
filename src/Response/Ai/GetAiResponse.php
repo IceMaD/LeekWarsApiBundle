@@ -1,8 +1,9 @@
 <?php
 
-namespace IceMaD\LeekWarsApiBundle\Response;
+namespace IceMaD\LeekWarsApiBundle\Response\Ai;
 
 use IceMaD\LeekWarsApiBundle\Entity\Ai;
+use IceMaD\LeekWarsApiBundle\Response\Response;
 
 class GetAiResponse extends Response
 {

@@ -1,10 +1,11 @@
 <?php
 
-namespace IceMaD\LeekWarsApiBundle\Response;
+namespace IceMaD\LeekWarsApiBundle\Response\Farmer;
 
 use IceMaD\LeekWarsApiBundle\Entity\Farmer;
+use IceMaD\LeekWarsApiBundle\Response\Response;
 
-class PostLoginTokenResponse extends Response
+class LoginTokenResponse extends Response
 {
     /**
      * @var Farmer
@@ -27,7 +28,7 @@ class PostLoginTokenResponse extends Response
     /**
      * @param Farmer $farmer
      *
-     * @return PostLoginTokenResponse
+     * @return LoginTokenResponse
      */
     public function setFarmer(Farmer $farmer)
     {
@@ -47,7 +48,7 @@ class PostLoginTokenResponse extends Response
     /**
      * @param string $token
      *
-     * @return PostLoginTokenResponse
+     * @return LoginTokenResponse
      */
     public function setToken(string $token)
     {

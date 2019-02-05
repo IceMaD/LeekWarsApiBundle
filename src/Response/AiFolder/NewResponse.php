@@ -1,8 +1,10 @@
 <?php
 
-namespace IceMaD\LeekWarsApiBundle\Response;
+namespace IceMaD\LeekWarsApiBundle\Response\AiFolder;
 
-class PostFolderNewResponse extends Response
+use IceMaD\LeekWarsApiBundle\Response\Response;
+
+class NewResponse extends Response
 {
     /**
      * @var int
@@ -20,7 +22,7 @@ class PostFolderNewResponse extends Response
     /**
      * @param int $id
      *
-     * @return PostFolderNewResponse
+     * @return NewResponse
      */
     public function setId(int $id)
     {

@@ -4,7 +4,7 @@ namespace IceMaD\LeekWarsApiBundle\Api;
 
 use GuzzleHttp\Promise\PromiseInterface;
 use IceMaD\LeekWarsApiBundle\Exception\NotImplementedException;
-use IceMaD\LeekWarsApiBundle\Response\PostLoginTokenResponse;
+use IceMaD\LeekWarsApiBundle\Response\Farmer\LoginTokenResponse;
 use Symfony\Component\HttpFoundation\File\File;
 
 class FarmerApi extends AbstractApi
@@ -85,7 +85,7 @@ class FarmerApi extends AbstractApi
                         'password' => $password,
                     ]
                 ),
-                'class' => PostLoginTokenResponse::class,
+                'class' => LoginTokenResponse::class,
             ]
         );
     }

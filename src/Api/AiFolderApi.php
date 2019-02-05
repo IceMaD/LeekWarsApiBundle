@@ -3,10 +3,10 @@
 namespace IceMaD\LeekWarsApiBundle\Api;
 
 use GuzzleHttp\Promise\PromiseInterface;
-use IceMaD\LeekWarsApiBundle\Response\PostAiFolderDeleteResponse;
-use IceMaD\LeekWarsApiBundle\Response\PostAiFolderRenameResponse;
-use IceMaD\LeekWarsApiBundle\Response\PostFolderChangeFolderResponse;
-use IceMaD\LeekWarsApiBundle\Response\PostFolderNewResponse;
+use IceMaD\LeekWarsApiBundle\Response\AiFolder\DeleteResponse;
+use IceMaD\LeekWarsApiBundle\Response\AiFolder\RenameResponse;
+use IceMaD\LeekWarsApiBundle\Response\AiFolder\ChangeFolderResponse;
+use IceMaD\LeekWarsApiBundle\Response\AiFolder\NewResponse;
 
 class AiFolderApi extends AbstractApi
 {
@@ -20,7 +20,7 @@ class AiFolderApi extends AbstractApi
                 'dest_folder_id' => $destinationParentFolderId,
                 'token' => $token ?? $this->tokenStorage->getToken(),
             ]),
-            'class' => PostFolderChangeFolderResponse::class,
+            'class' => ChangeFolderResponse::class,
         ]);
     }
 
@@ -31,7 +31,7 @@ class AiFolderApi extends AbstractApi
                 'folder_id' => $folderId,
                 'token' => $token ?? $this->tokenStorage->getToken(),
             ]),
-            'class' => PostAiFolderDeleteResponse::class,
+            'class' => DeleteResponse::class,
         ]);
     }
 
@@ -42,7 +42,7 @@ class AiFolderApi extends AbstractApi
                 'folder_id' => $parentFolderId,
                 'token' => $token ?? $this->tokenStorage->getToken(),
             ]),
-            'class' => PostFolderNewResponse::class,
+            'class' => NewResponse::class,
         ]);
     }
 
@@ -54,7 +54,7 @@ class AiFolderApi extends AbstractApi
                 'new_name' => $newName,
                 'token' => $token ?? $this->tokenStorage->getToken(),
             ]),
-            'class' => PostAiFolderRenameResponse::class,
+            'class' => RenameResponse::class,
         ]);
     }
 }

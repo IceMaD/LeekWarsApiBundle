@@ -43,10 +43,7 @@ class AiApi extends AbstractApi
     {
         $token = $token ?? $this->tokenStorage->getToken();
 
-        return $this->client->getAsync(self::BASE_URL."/get/$aiId/$token", ['class' => GetAiResponse::class])
-            ->then(function (GetAiResponse $response) {
-                return $response->getAi();
-            });
+        return $this->client->getAsync(self::BASE_URL."/get/$aiId/$token", ['class' => GetAiResponse::class]);
     }
 
     public function getFarmerAis(string $token = null): PromiseInterface

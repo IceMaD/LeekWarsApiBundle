@@ -58,7 +58,7 @@ class AiApi extends AbstractApi
         return $this->client->postAsync(self::BASE_URL.'/new/', [
             'body' => http_build_query([
                 'folder_id' => $folderId,
-                'v2' => (string) $v2,
+                'v2' => $v2 ? 'true' : 'false',
                 'token' => $token || $this->tokenStorage->getToken(),
             ]),
             'class' => NewResponse::class,

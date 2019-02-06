@@ -15,6 +15,11 @@ abstract class Response
     protected $error;
 
     /**
+     * @var string|null
+     */
+    protected $phpSessId;
+
+    /**
      * @return bool
      */
     public function isSuccess(): bool
@@ -50,6 +55,18 @@ abstract class Response
     public function setError(string $error): self
     {
         $this->error = $error;
+
+        return $this;
+    }
+
+    public function getPhpSessId(): ?string
+    {
+        return $this->phpSessId;
+    }
+
+    public function setPhpSessId(?string $phpSessId): self
+    {
+        $this->phpSessId = $phpSessId;
 
         return $this;
     }

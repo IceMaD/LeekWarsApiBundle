@@ -4,6 +4,7 @@ namespace IceMaD\LeekWarsApiBundle\Api;
 
 use GuzzleHttp\Promise\PromiseInterface;
 use IceMaD\LeekWarsApiBundle\Exception\NotImplementedException;
+use IceMaD\LeekWarsApiBundle\Response\Fight\GetLogsResponse;
 
 class FightApi extends AbstractApi
 {
@@ -18,15 +19,13 @@ class FightApi extends AbstractApi
 
     public function getFight(int $fightId): PromiseInterface
     {
-        $url = self::BASE_URL.'/get/';
-
-        throw new NotImplementedException('comment');
+        return $this->client->getAsync(self::BASE_URL.'/get/', ['class' => GetFightResponse::class]);
     }
 
     public function getLog(int $fightId, string $token = null): PromiseInterface
     {
-        $url = self::BASE_URL.'/get-logs/';
+        $token = $token ?? $this->tokenStorage->getToken();
 
-        throw new NotImplementedException('comment');
+        return $this->client->getAsync(self::BASE_URL."/get-logs/$fightId/$token", ['class' => GetLogsResponse::class]);
     }
 }

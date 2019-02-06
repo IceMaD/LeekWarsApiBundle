@@ -4,6 +4,9 @@ namespace IceMaD\LeekWarsApiBundle\Api;
 
 use GuzzleHttp\Promise\PromiseInterface;
 use IceMaD\LeekWarsApiBundle\Exception\NotImplementedException;
+use IceMaD\LeekWarsApiBundle\Response\Farmer\GetConnectedResponse;
+use IceMaD\LeekWarsApiBundle\Response\Farmer\GetFarmerResponse;
+use IceMaD\LeekWarsApiBundle\Response\Farmer\GetFromTokenResponse;
 use IceMaD\LeekWarsApiBundle\Response\Farmer\LoginTokenResponse;
 use Symfony\Component\HttpFoundation\File\File;
 
@@ -13,6 +16,8 @@ class FarmerApi extends AbstractApi
 
     public function acceptTerms(string $token = null): PromiseInterface
     {
+        $token = $token ?? $this->tokenStorage->getToken();
+
         $url = self::BASE_URL.'/accept-terms/';
 
         throw new NotImplementedException('postAcceptTerms');
@@ -20,6 +25,8 @@ class FarmerApi extends AbstractApi
 
     public function activate(int $farmerId, string $code): PromiseInterface
     {
+        $token = $token ?? $this->tokenStorage->getToken();
+
         $url = self::BASE_URL.'/activate/';
 
         throw new NotImplementedException('postActivate');
@@ -27,6 +34,8 @@ class FarmerApi extends AbstractApi
 
     public function changeCountry(string $countryCode, string $token = null): PromiseInterface
     {
+        $token = $token ?? $this->tokenStorage->getToken();
+
         $url = self::BASE_URL.'/change-country/';
 
         throw new NotImplementedException('postChangeCountry');
@@ -34,6 +43,8 @@ class FarmerApi extends AbstractApi
 
     public function changePassword(string $oldPassword, string $newPassword, string $token = null): PromiseInterface
     {
+        $token = $token ?? $this->tokenStorage->getToken();
+
         $url = self::BASE_URL.'/change-password/';
 
         throw new NotImplementedException('postChangePassword');
@@ -41,6 +52,8 @@ class FarmerApi extends AbstractApi
 
     public function disconnect(string $token = null): PromiseInterface
     {
+        $token = $token ?? $this->tokenStorage->getToken();
+
         $url = self::BASE_URL.'/disconnect/';
 
         throw new NotImplementedException('postDisconnect');
@@ -48,27 +61,29 @@ class FarmerApi extends AbstractApi
 
     public function getFarmer(int $farmerId): PromiseInterface
     {
-        $url = self::BASE_URL.'/get/';
+        $token = $token ?? $this->tokenStorage->getToken();
 
-        throw new NotImplementedException('getFarmer');
+        return $this->client->getAsync(self::BASE_URL."/get/$farmerId", ['class' => GetFarmerResponse::class]);
     }
 
     public function getConnected(): PromiseInterface
     {
-        $url = self::BASE_URL.'/get-connected/';
+        $token = $token ?? $this->tokenStorage->getToken();
 
-        throw new NotImplementedException('getConnected');
+        return $this->client->getAsync(self::BASE_URL.'/get-connected', ['class' => GetConnectedResponse::class]);
     }
 
     public function getFromToken(string $token = null): PromiseInterface
     {
-        $url = self::BASE_URL.'/get-from-token/';
+        $token = $token ?? $this->tokenStorage->getToken();
 
-        throw new NotImplementedException('getConnected');
+        return $this->client->getAsync(self::BASE_URL.'/get-from-token', ['class' => GetFromTokenResponse::class]);
     }
 
     public function login(string $login, string $password, bool $keepConnected = false): PromiseInterface
     {
+        $token = $token ?? $this->tokenStorage->getToken();
+
         $url = self::BASE_URL.'/login/';
 
         throw new NotImplementedException('postLogin');
@@ -76,6 +91,8 @@ class FarmerApi extends AbstractApi
 
     public function loginToken(string $login, string $password): PromiseInterface
     {
+        $token = $token ?? $this->tokenStorage->getToken();
+
         return $this->client->postAsync(
             '/api/farmer/login-token/',
             [
@@ -104,6 +121,8 @@ class FarmerApi extends AbstractApi
 
     public function registerTournament($token = null): PromiseInterface
     {
+        $token = $token ?? $this->tokenStorage->getToken();
+
         $url = self::BASE_URL.'/register-tournament/';
 
         throw new NotImplementedException('postRegisterTournament');
@@ -111,6 +130,8 @@ class FarmerApi extends AbstractApi
 
     public function setAvatar(File $file, string $token = null): PromiseInterface
     {
+        $token = $token ?? $this->tokenStorage->getToken();
+
         $url = self::BASE_URL.'/set-avatar/';
 
         throw new NotImplementedException('postSetAvatar');
@@ -118,6 +139,8 @@ class FarmerApi extends AbstractApi
 
     public function setGithub(string $github, string $token = null): PromiseInterface
     {
+        $token = $token ?? $this->tokenStorage->getToken();
+
         $url = self::BASE_URL.'/set-github/';
 
         throw new NotImplementedException('postSetGithub');
@@ -125,6 +148,8 @@ class FarmerApi extends AbstractApi
 
     public function setInGarden(bool $inGarden, string $token = null): PromiseInterface
     {
+        $token = $token ?? $this->tokenStorage->getToken();
+
         $url = self::BASE_URL.'/set-in-garden/';
 
         throw new NotImplementedException('postSetInGarden');
@@ -132,6 +157,8 @@ class FarmerApi extends AbstractApi
 
     public function setWebsite(string $website, string $token = null): PromiseInterface
     {
+        $token = $token ?? $this->tokenStorage->getToken();
+
         $url = self::BASE_URL.'/set-website/';
 
         throw new NotImplementedException('postSetWebsite');
@@ -139,6 +166,8 @@ class FarmerApi extends AbstractApi
 
     public function unregister(string $password, bool $deleteForumMessages, string $token = null): PromiseInterface
     {
+        $token = $token ?? $this->tokenStorage->getToken();
+
         $url = self::BASE_URL.'/unregister/';
 
         throw new NotImplementedException('postUnregister');
@@ -146,6 +175,8 @@ class FarmerApi extends AbstractApi
 
     public function unregisterTournament(string $token = null): PromiseInterface
     {
+        $token = $token ?? $this->tokenStorage->getToken();
+
         $url = self::BASE_URL.'/unregister-tournament/';
 
         throw new NotImplementedException('postUnregisterTournament');
@@ -153,6 +184,8 @@ class FarmerApi extends AbstractApi
 
     public function update(string $token = null): PromiseInterface
     {
+        $token = $token ?? $this->tokenStorage->getToken();
+
         $url = self::BASE_URL.'/update/';
 
         throw new NotImplementedException('postUpdate');

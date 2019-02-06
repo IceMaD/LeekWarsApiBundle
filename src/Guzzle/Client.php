@@ -5,6 +5,7 @@ namespace IceMaD\LeekWarsApiBundle\Guzzle;
 use IceMaD\LeekWarsApiBundle\Exception\InvalidTokenException;
 use IceMaD\LeekWarsApiBundle\Exception\RequestFailedException;
 use IceMaD\LeekWarsApiBundle\Response\Response;
+use IceMaD\LeekWarsApiBundle\Storage\TokenStorage;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -15,7 +16,12 @@ class Client extends \GuzzleHttp\Client
      */
     private $serializer;
 
-    public function __construct(array $config = [], SerializerInterface $serializer)
+    /**
+     * @var TokenStorage
+     */
+    private $tokenStorage;
+
+    public function __construct(array $config = [], TokenStorage $tokenStorage, SerializerInterface $serializer)
     {
         $config['base_uri'] = 'https://leekwars.com:443/api';
         $config['headers'] = [
@@ -27,6 +33,7 @@ class Client extends \GuzzleHttp\Client
         parent::__construct($config);
 
         $this->serializer = $serializer;
+        $this->tokenStorage = $tokenStorage;
     }
 
     /**
@@ -44,7 +51,17 @@ class Client extends \GuzzleHttp\Client
 
         return parent::requestAsync($method, $uri, $options)
             ->then(function (ResponseInterface $response) use ($options) {
-                return $this->serializer->deserialize($response->getBody()->getContents(), $options['class'], 'json');
+                $phpSessId = null;
+
+                foreach ($response->getHeader('Set-Cookie') as $cookie) {
+                    if (preg_match('/^PHPSESSID=.*$/', $cookie, $matches)) {
+                        $phpSessId = $cookie;
+                        break;
+                    }
+                }
+
+                return $this->serializer->deserialize($response->getBody()->getContents(), $options['class'], 'json')
+                    ->setPhpSessId($phpSessId);
             })
             ->then(function (Response $response) {
                 if (!$response->isSuccess()) {

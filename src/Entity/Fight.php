@@ -62,14 +62,14 @@ class Fight
     /**
      * @TODO class
      *
-     * @var array
+     * @var array|null
      */
     private $data;
 
     /**
      * @TODO class
      *
-     * @var array
+     * @var array|null
      */
     private $report;
 
@@ -230,24 +230,24 @@ class Fight
         return $this;
     }
 
-    public function getData(): array
+    public function getData(): ?array
     {
         return $this->data;
     }
 
-    public function setData(array $data): self
+    public function setData(?array $data): self
     {
         $this->data = $data;
 
         return $this;
     }
 
-    public function getReport(): array
+    public function getReport(): ?array
     {
         return $this->report;
     }
 
-    public function setReport(array $report): self
+    public function setReport(?array $report): self
     {
         $this->report = $report;
 

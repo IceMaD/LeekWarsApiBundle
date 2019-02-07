@@ -4,6 +4,9 @@ namespace IceMaD\LeekWarsApiBundle\Entity;
 
 class Fight
 {
+    const STATUS_IN_QUEUE = 0;
+    const STATUS_ENDED = 1;
+
     /**
      * @var int
      */
@@ -168,6 +171,11 @@ class Fight
         $this->status = $status;
 
         return $this;
+    }
+
+    public function isEnded()
+    {
+        return self::STATUS_ENDED === $this->status;
     }
 
     public function getWinner(): int

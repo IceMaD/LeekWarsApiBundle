@@ -4,6 +4,7 @@ namespace IceMaD\LeekWarsApiBundle\Api;
 
 use GuzzleHttp\Promise\PromiseInterface;
 use IceMaD\LeekWarsApiBundle\Exception\NotImplementedException;
+use IceMaD\LeekWarsApiBundle\Response\Fight\GetFightResponse;
 use IceMaD\LeekWarsApiBundle\Response\Fight\GetLogsResponse;
 
 class FightApi extends AbstractApi

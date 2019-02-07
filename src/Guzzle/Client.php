@@ -7,6 +7,7 @@ use IceMaD\LeekWarsApiBundle\Exception\RequestFailedException;
 use IceMaD\LeekWarsApiBundle\Response\Response;
 use IceMaD\LeekWarsApiBundle\Storage\TokenStorage;
 use Psr\Http\Message\ResponseInterface;
+use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class Client extends \GuzzleHttp\Client
@@ -60,7 +61,9 @@ class Client extends \GuzzleHttp\Client
                     }
                 }
 
-                return $this->serializer->deserialize($response->getBody()->getContents(), $options['class'], 'json')
+                return $this->serializer->deserialize($response->getBody()->getContents(), $options['class'], 'json', [
+                    AbstractObjectNormalizer::DISABLE_TYPE_ENFORCEMENT => 'true',
+                ])
                     ->setPhpSessId($phpSessId);
             })
             ->then(function (Response $response) {

@@ -60,7 +60,7 @@ class Farmer
     private $defeats;
 
     /**
-     * @var float
+     * @var string
      */
     private $ratio;
 

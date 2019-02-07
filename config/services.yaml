@@ -4,8 +4,6 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
-        bind:
-            $env: '%kernel.environment%'
 
     IceMaD\LeekWarsApiBundle\:
         resource: '../src/*'

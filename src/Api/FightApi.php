@@ -20,7 +20,7 @@ class FightApi extends AbstractApi
 
     public function getFight(int $fightId): PromiseInterface
     {
-        return $this->client->getAsync(self::BASE_URL.'/get/', ['class' => GetFightResponse::class]);
+        return $this->client->getAsync(self::BASE_URL."/get/$fightId", ['class' => GetFightResponse::class]);
     }
 
     public function getLog(int $fightId, string $token = null): PromiseInterface

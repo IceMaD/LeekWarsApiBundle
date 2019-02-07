@@ -44,9 +44,12 @@ class Leek
         return $this->id;
     }
 
-    public function setId(int $id): self
+    /**
+     * @param int $id Not hard typed because /api/fight/get will return ids as string -.-
+     */
+    public function setId($id): self
     {
-        $this->id = $id;
+        $this->id = (int) $id;
 
         return $this;
     }

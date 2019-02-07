@@ -63,21 +63,21 @@ class FarmerApi extends AbstractApi
     {
         $token = $token ?? $this->tokenStorage->getToken();
 
-        return $this->client->getAsync(self::BASE_URL."/get/$farmerId", ['class' => GetFarmerResponse::class]);
+        return $this->client->getAsync(self::BASE_URL."/get/$farmerId/$token", ['class' => GetFarmerResponse::class]);
     }
 
     public function getConnected(): PromiseInterface
     {
         $token = $token ?? $this->tokenStorage->getToken();
 
-        return $this->client->getAsync(self::BASE_URL.'/get-connected', ['class' => GetConnectedResponse::class]);
+        return $this->client->getAsync(self::BASE_URL."/get-connected/$token", ['class' => GetConnectedResponse::class]);
     }
 
     public function getFromToken(string $token = null): PromiseInterface
     {
         $token = $token ?? $this->tokenStorage->getToken();
 
-        return $this->client->getAsync(self::BASE_URL.'/get-from-token', ['class' => GetFromTokenResponse::class]);
+        return $this->client->getAsync(self::BASE_URL."/get-from-token/$token", ['class' => GetFromTokenResponse::class]);
     }
 
     public function login(string $login, string $password, bool $keepConnected = false): PromiseInterface
@@ -91,8 +91,6 @@ class FarmerApi extends AbstractApi
 
     public function loginToken(string $login, string $password): PromiseInterface
     {
-        $token = $token ?? $this->tokenStorage->getToken();
-
         return $this->client->postAsync(
             '/api/farmer/login-token/',
             [
